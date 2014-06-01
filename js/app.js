@@ -12,6 +12,7 @@ App.IndexRoute = Ember.Route.extend({
 
 App.Router.map(function(){
   this.resource('about');
+  this.resource('usage');
   this.resource('posts', function(){
     this.resource('post', { path: '/:post_id' });
   });
@@ -19,8 +20,41 @@ App.Router.map(function(){
 });
 
 App.PostsRoute = Ember.Route.extend({
-  model: function(){
+  /*model: function(){
     return posts;
+  }*/
+  model: function(){
+    return $.getJSON('http://tomdale.net/api/get_recent_posts/?callback=?').then(function(data){
+      return data.posts.map(function(post){
+        post.body = post.content;
+        return post;
+      });
+    });
+  }
+});
+
+App.UsageRoute = Ember.Route.extend({
+  model: function() {
+    return $.getJSON('api.coursehub.tv/user/usage?ltiKey=Jgs0wJjDymf4DrFhROa6579NvmTCsEw1lfsYpScd47Y7odf5s62o421qeLsMQfE1&ltiUserId=6378&ltiContextId=185', 
+      function(data) {
+        
+    });
+    console.log("test");
+  }
+});
+
+
+App.PostRoute = Ember.Route.extend({
+  /*model: function(params) {
+    return posts.findBy('id', params.post_id);
+  }*/
+  model: function(params) {
+    return $.getJSON('http://tomdale.net/api/get_post/?id='+params.post_id+'&callback=?').then(function(data){
+      return data.posts.map(function(post){
+        post.body = post.content;
+        return post;
+      });
+    });
   }
 });
 
@@ -39,11 +73,6 @@ App.PostController = Ember.ObjectController.extend({
 
 });
 
-App.PostRoute = Ember.Route.extend({
-  model: function(params) {
-    return posts.findBy('id', params.post_id);
-  }
-});
 
 Ember.Handlebars.helper('format-date', function(date) {
   return moment(date).fromNow();
@@ -56,7 +85,7 @@ Ember.Handlebars.helper('format-markdown', function(input){
 });
 
 
-var posts = [{
+/*var posts = [{
   id: '1',
   title: "Rails is Omakase",
   author: { name: "d2h" },
@@ -70,4 +99,4 @@ var posts = [{
   date: new Date('12-24-2012'),
   excerpt: "My [appearance on the Ruby Rogues podcast](http://rubyrogues.com/056-rr-david-heinemeier-hansson/) recently came up for discussion again on the private Parley mailing list.",
   body: "A long list of topics were raised and I took a time to ramble at large about all of them at once. Apologies for not taking the time to be more succinct, but at least each topic has a header so you can skip stuff you don't care about.\n\n### Maintainability\n\nIt's simply not true to say that I don't care about maintainability. I still work on the oldest Rails app in the world."
-}];
+}];*/
