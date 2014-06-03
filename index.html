@@ -8,69 +8,46 @@
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 </head>
 <body>
-  <!-- <script type="text/x-handlebars">
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a class="brand" href="#">Bloggr </a>
-        <ul class="nav">
-          <li> {{#link-to 'posts'}}Posts {{/link-to}}</li>
-          <li>{{#link-to 'about'}}About{{/link-to}}</li>
-          <li>{{#link-to 'usage'}}Usage{{/link-to}}</li>
-        </ul>
-      </div>
-    </div>
+  <script type="text/x-handlebars">
+    <h1> Application  </h1>
+    <ul>
+      <li>{{#link-to 'about'}}About{{/link-to}}</li>
+      <li>{{#link-to 'login'}}Login{{/link-to}}</li>
+    </ul>
 
     {{outlet}}
-  </script> -->
-
-  <script type="text/x-handlebars">
-    <div class="container">
-      <div class="row-fluid">
-        <ul class="nav nav-list span3 well">
-          <li><a href="#" {{action createUser}}>+ New User</a></li>
-          {{#each model}}
-          <li>{{#link-to 'user' this}}{{first}}{{/link-to}}</li>
-          {{/each}}
-        </ul>
-        <div class="span9 well">
-          {{outlet}}
-        </div>
-      </div>
-    </div>
   </script>
 
-  <script type="text/x-handlebars" id="user">
-    <h2>
-      {{first}} {{last}}
-      <img {{bind-attr src="avatar"}} class="pull-right" width=50 />
-    </h2>
-    <dl>
-      <dt>First</dt>
-      <dd>{{first}}</dd>
-      <dt>Last</dt>
-      <dd>{{last}}</dd>
-    </dl>
-    {{#link-to 'editUser' this class="btn"}}Edit{{/link-to}}
+
+  <script type="text/x-handlebars" id="about">
+    <h2>About</h2>
+    <li>
+      {{#link-to 'about.location'}}Location{{/link-to}}
+    </li>
+
+    <li>
+      {{#link-to 'about.product'}}Product{{/link-to}}
+    </li>
+    {{outlet}}
   </script>
 
-  <script type="text/x-handlebars" id="editUser">
-    <h2>Edit User</h2>
-    <form class="form-inline" {{action save on="submit"}}>
-      <label>
-        First:
-        {{input type="text" value=first}}      
-      </label><br>
-    
-      <label>
-        Last:
-        {{input type="text" value=last}}        
-      </label>
-    
-      <div class="controls">
-        <button type="submit" class="btn btn-primary">Done</button>
-      </div>
-    </form>
+  <script type="text/x-handlebars" id="about/location">
+    <h3>Location</h3>
   </script>
+
+  <script type="text/x-handlebars" id="about/product">
+    <h3>Product</h3>
+  </script>
+
+  <script type="text/x-handlebars" id="index">
+    <h3>Index</h3>
+  </script>
+
+
+  <script type="text/x-handlebars" id="login">
+    <h2>Login</h2>
+  </script>
+
 
 
   <script src="js/libs/jquery-1.10.2.js"></script>
