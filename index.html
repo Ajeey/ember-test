@@ -8,7 +8,7 @@
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 </head>
 <body>
-  <script type="text/x-handlebars">
+  <!-- <script type="text/x-handlebars">
     <div class="navbar">
       <div class="navbar-inner">
         <a class="brand" href="#">Bloggr </a>
@@ -21,92 +21,57 @@
     </div>
 
     {{outlet}}
-  </script>
+  </script> -->
 
-  <script type="text/x-handlebars" id="usage">
-  <div class="container-fluid">
+  <script type="text/x-handlebars">
+    <div class="container">
       <div class="row-fluid">
-        <h2>LTI usage</h2>
-        /*{{usage.total}}*/
-      </div>
-  </div>
-  
-
-  </script>
-
-  <script type="text/x-handlebars" id="posts">
-    <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="span3">
-          <table class='table'>
-            <thead>
-              <tr><th>Recent Posts</th></tr>
-            </thead>
-            {{#each}}
-            <tr><td>
-              {{#link-to 'post' this}}
-                {{{title}}} <small class='muted'>by {{author.name}}</small>
-              {{/link-to}}
-            </td></tr>
-            {{/each}}
-          </table>
-        </div>
-        <div class="span9">
+        <ul class="nav nav-list span3 well">
+          <li><a href="#" {{action createUser}}>+ New User</a></li>
+          {{#each model}}
+          <li>{{#link-to 'user' this}}{{first}}{{/link-to}}</li>
+          {{/each}}
+        </ul>
+        <div class="span9 well">
           {{outlet}}
         </div>
       </div>
     </div>
   </script>
 
-  <script type="text/x-handlebars" id="post">
-    {{#if isEditing}}
-      {{partial 'post/edit'}}
-      <button {{action "doneEditing"}}>Done</button>
-    {{else}}
-      <button {{action "edit"}}>Edit</button>
-    {{/if}}
-
-    <<h1>{{title}}</h1>
-    <h2>by  {{author.name}} <small class="muted">({{format-date date}}) </small></h2>
-
-    <div class="intro">
-      {{format-markdown excerpt}}
-    </div>
-
-    <div class="below-the-fold">
-      {{ format-markdown body}}
-    </div>
-
+  <script type="text/x-handlebars" id="user">
+    <h2>
+      {{first}} {{last}}
+      <img {{bind-attr src="avatar"}} class="pull-right" width=50 />
+    </h2>
+    <dl>
+      <dt>First</dt>
+      <dd>{{first}}</dd>
+      <dt>Last</dt>
+      <dd>{{last}}</dd>
+    </dl>
+    {{#link-to 'editUser' this class="btn"}}Edit{{/link-to}}
   </script>
 
-  <script type="text/x-handlebars" id="post/_edit">
-    <p>{{input type="text" value=title}}</p>
-    <p>{{input type="text" value=excerpt}}</p>
-    <p>{{textarea value=body}}</p>
+  <script type="text/x-handlebars" id="editUser">
+    <h2>Edit User</h2>
+    <form class="form-inline" {{action save on="submit"}}>
+      <label>
+        First:
+        {{input type="text" value=first}}      
+      </label><br>
+    
+      <label>
+        Last:
+        {{input type="text" value=last}}        
+      </label>
+    
+      <div class="controls">
+        <button type="submit" class="btn btn-primary">Done</button>
+      </div>
+    </form>
   </script>
 
-
-  <script type="text/x-handlebars" id="about">
-    <div class='about'>
-      <p>Yehuda Katz is a member of the <a href="http://emberjs.com">Ember.js</a>, <a href="http://rubyonrails.org">Ruby on Rails</a>
-        and <a href="http://www.jquery.com">jQuery</a> Core Teams; he spends his daytime hours at the startup he founded,
-      <a href="http://www.tilde.io">Tilde Inc.</a>.</p>
-      <p>Yehuda is co-author of best-selling <a href="http://affiliate.manning.com/idevaffiliate.php?id=485_176">jQuery in Action</a> and
-      <a href="http://affiliate.manning.com/idevaffiliate.php?id=485_145">Rails 3 in Action</a>.</p>
-      <p>He spends most of his time hacking on open source—his main projects, along with others, like <a href="https://github.com/wycats/thor">Thor</a>,
-      <a href="http://www.handlebarsjs.com">Handlebars</a> and <a href="https://github.com/carlhuda/janus">Janus</a>—or traveling the world doing evangelism work.</p>
-      <p>He can be found on Twitter as <a href="http://www.twitter.com/wycats">@wycats</a>.</p>
-    </div>
-
-    <div class='about'>
-      <p>My name is Tom Dale. I helped create <a href="http://www.emberjs.com/">Ember.js</a>, a JavaScript framework that brings sanity to the web.</p>
-
-      <p>In October of 2011, I co-founded <a href="http://www.tilde.io">Tilde</a> with Yehuda Katz, Leah Silber and Carl Lerche.</p>
-
-      <p>In my spare time I run a cash-for-beer exchange program at many local San Francisco dive bars.</p>
-    </div>
-
-  </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
